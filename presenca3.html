@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -7,16 +8,18 @@
   <title>Gerenciamento de Equipes</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f6f8;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #e9ecef;
       margin: 0;
       padding: 0;
+      color: #495057;
     }
     header {
-      background-color: #004d40;
+      background-color: #343a40;
       color: white;
       text-align: center;
-      padding: 15px;
+      padding: 20px;
+      font-size: 1.5rem;
     }
     .container {
       display: flex;
@@ -26,54 +29,84 @@
       padding: 20px;
     }
     .team, .panel {
-      width: 300px;
+      width: 320px;
       background-color: white;
-      border: 1px solid #ddd;
+      border: 1px solid #ced4da;
       border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      padding: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 15px;
     }
     .team h3, .panel h3 {
-      font-size: 16px;
-      color: #004d40;
+      font-size: 1.25rem;
+      color: #343a40;
       text-align: center;
-      margin: 0 0 10px;
+      margin: 0 0 15px;
+      border-bottom: 2px solid #6c757d;
+      padding-bottom: 10px;
     }
     .droppable {
-      border: 2px dashed #ccc;
+      border: 2px dashed #adb5bd;
       border-radius: 5px;
       padding: 10px;
-      min-height: 50px;
+      min-height: 80px;
     }
     .member {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background-color: #f1f1f1;
-      padding: 8px;
-      margin: 5px 0;
-      border-radius: 5px;
+      background-color: #f8f9fa;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 6px;
+      border: 1px solid #ced4da;
       cursor: grab;
+      transition: background-color 0.3s;
+    }
+    .member:hover {
+      background-color: #e2e6ea;
     }
     .member.absent {
-      background-color: #f8d7da;
-      border: 1px solid #dc3545;
+      background-color: #ffe8e6;
+      border: 1px solid #e63946;
     }
     button {
-      padding: 5px 10px;
-      font-size: 12px;
+      padding: 6px 12px;
+      font-size: 0.9rem;
       margin-left: 5px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
     }
     button.mark-absent {
-      background-color: #dc3545;
+      background-color: #e63946;
       color: white;
     }
+    button.mark-absent:hover {
+      background-color: #d62839;
+    }
     button.mark-present {
-      background-color: #28a745;
+      background-color: #38a169;
       color: white;
+    }
+    button.mark-present:hover {
+      background-color: #2f855a;
+    }
+    button.download-data {
+      background-color: #007bff;
+      color: white;
+      margin-top: 15px;
+      display: block;
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      text-align: center;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button.download-data:hover {
+      background-color: #0056b3;
     }
   </style>
 </head>
