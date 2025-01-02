@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -6,18 +7,16 @@
   <title>Gerenciamento de Equipes</title>
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #e9ecef;
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f8;
       margin: 0;
       padding: 0;
-      color: #495057;
     }
     header {
-      background-color: #343a40;
+      background-color: #004d40;
       color: white;
       text-align: center;
-      padding: 20px;
-      font-size: 1.5rem;
+      padding: 15px;
     }
     .container {
       display: flex;
@@ -27,84 +26,54 @@
       padding: 20px;
     }
     .team, .panel {
-      width: 320px;
+      width: 300px;
       background-color: white;
-      border: 1px solid #ced4da;
+      border: 1px solid #ddd;
       border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      padding: 15px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      padding: 10px;
     }
     .team h3, .panel h3 {
-      font-size: 1.25rem;
-      color: #343a40;
+      font-size: 16px;
+      color: #004d40;
       text-align: center;
-      margin: 0 0 15px;
-      border-bottom: 2px solid #6c757d;
-      padding-bottom: 10px;
+      margin: 0 0 10px;
     }
     .droppable {
-      border: 2px dashed #adb5bd;
+      border: 2px dashed #ccc;
       border-radius: 5px;
       padding: 10px;
-      min-height: 80px;
+      min-height: 50px;
     }
     .member {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background-color: #f8f9fa;
-      padding: 10px;
-      margin: 8px 0;
-      border-radius: 6px;
-      border: 1px solid #ced4da;
+      background-color: #f1f1f1;
+      padding: 8px;
+      margin: 5px 0;
+      border-radius: 5px;
       cursor: grab;
-      transition: background-color 0.3s;
-    }
-    .member:hover {
-      background-color: #e2e6ea;
     }
     .member.absent {
-      background-color: #ffe8e6;
-      border: 1px solid #e63946;
+      background-color: #f8d7da;
+      border: 1px solid #dc3545;
     }
     button {
-      padding: 6px 12px;
-      font-size: 0.9rem;
+      padding: 5px 10px;
+      font-size: 12px;
       margin-left: 5px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      transition: background-color 0.3s, color 0.3s;
     }
     button.mark-absent {
-      background-color: #e63946;
+      background-color: #dc3545;
       color: white;
-    }
-    button.mark-absent:hover {
-      background-color: #d62839;
     }
     button.mark-present {
-      background-color: #38a169;
+      background-color: #28a745;
       color: white;
-    }
-    button.mark-present:hover {
-      background-color: #2f855a;
-    }
-    button.download-data {
-      background-color: #007bff;
-      color: white;
-      margin-top: 15px;
-      display: block;
-      width: 100%;
-      padding: 10px;
-      font-size: 1rem;
-      text-align: center;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button.download-data:hover {
-      background-color: #0056b3;
     }
   </style>
 </head>
@@ -259,43 +228,61 @@
 </div>
 
 <script>
-  document.querySelectorAll('.mark-absent').forEach(button => {
-    button.addEventListener('click', e => {
-      const member = e.target.parentElement;
-      const absentPanel = document.getElementById('absent-droppable');
-      if (!absentPanel.contains(member)) {
-        absentPanel.appendChild(member);
-        member.classList.add('absent');
-      }
+  const members = document.querySelectorAll('.member');
+  const droppables = document.querySelectorAll('.droppable');
+
+  // Drag and Drop Handlers
+  members.forEach(member => {
+    member.addEventListener('dragstart', e => {
+      e.dataTransfer.setData('text', e.target.dataset.name);
+      setTimeout(() => member.classList.add('dragging'), 0);
+    });
+
+    member.addEventListener('dragend', () => {
+      member.classList.remove('dragging');
     });
   });
 
+  droppables.forEach(dropZone => {
+    dropZone.addEventListener('dragover', e => {
+      e.preventDefault();
+      dropZone.classList.add('hover');
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+      dropZone.classList.remove('hover');
+    });
+
+    dropZone.addEventListener('drop', e => {
+      e.preventDefault();
+      const memberName = e.dataTransfer.getData('text');
+      const member = document.querySelector(`[data-name="${memberName}"]`);
+      dropZone.appendChild(member);
+      dropZone.classList.remove('hover');
+    });
+  });
+
+  // Mark as Absent
+  document.querySelectorAll('.mark-absent').forEach(button => {
+    button.addEventListener('click', e => {
+      const member = e.target.parentElement;
+      const absentPanel = document.getElementById('absent-panel').querySelector('.droppable');
+      absentPanel.appendChild(member);
+      member.classList.add('absent');
+    });
+  });
+
+  // Mark as Present
   document.querySelectorAll('.mark-present').forEach(button => {
     button.addEventListener('click', e => {
       const member = e.target.parentElement;
       const originalTeamId = member.dataset.originalTeam;
       const originalTeam = document.getElementById(originalTeamId).querySelector('.droppable');
-      if (originalTeam && !originalTeam.contains(member)) {
-        originalTeam.appendChild(member);
-        member.classList.remove('absent');
-      }
-    });
-  });
-
-  // Functionality for exporting a PDF
-  document.querySelector('.download-data').addEventListener('click', () => {
-    html2canvas(document.body).then(canvas => {
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF();
-      pdf.addImage(imgData, 'PNG', 0, 0, 210, 297); // A4 dimensions
-      pdf.save('equipes_faltas.pdf');
+      originalTeam.appendChild(member);
+      member.classList.remove('absent');
     });
   });
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
 </body>
 </html>
-
