@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerenciamento de Equipes</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #e9ecef;
+      margin: 0;
+      padding: 0;
+      color: #495057;
+    }
+    header {
+      background-color: #343a40;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 1.5rem;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      padding: 20px;
+    }
+    .team, .panel {
+      width: 320px;
+      background-color: white;
+      border: 1px solid #ced4da;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+    }
+    .team h3, .panel h3 {
+      font-size: 1.25rem;
+      color: #343a40;
+      text-align: center;
+      margin: 0 0 15px;
+      border-bottom: 2px solid #6c757d;
+      padding-bottom: 10px;
+    }
+    .droppable {
+      border: 2px dashed #adb5bd;
+      border-radius: 5px;
+      padding: 10px;
+      min-height: 80px;
+    }
+    .member {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #f8f9fa;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 6px;
+      border: 1px solid #ced4da;
+      cursor: grab;
+      transition: background-color 0.3s;
+    }
+    .member:hover {
+      background-color: #e2e6ea;
+    }
+    .member.absent {
+      background-color: #ffe8e6;
+      border: 1px solid #e63946;
+    }
+    button {
+      padding: 6px 12px;
+      font-size: 0.9rem;
+      margin-left: 5px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    button.mark-absent {
+      background-color: #e63946;
+      color: white;
+    }
+    button.mark-absent:hover {
+      background-color: #d62839;
+    }
+    button.mark-present {
+      background-color: #38a169;
+      color: white;
+    }
+    button.mark-present:hover {
+      background-color: #2f855a;
+    }
+    button.download-data {
+      background-color: #007bff;
+      color: white;
+      margin-top: 15px;
+      display: block;
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      text-align: center;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button.download-data:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Gerenciamento Diário de Equipes</h1>
+</header>
+
+<div class="container">
+  <!-- Equipe 02 -->
+  <div class="team" id="team-02">
+    <h3>Equipe 02</h3>
+    <div class="droppable">
+      <div class="member" draggable="true" data-name="Eliel Ribeiro Machado" data-original-team="team-02">
+        Eliel Ribeiro Machado
+        <button class="mark-absent">Falta</button>
+        <button class="mark-present">Presença</button>
+      </div>
+      <div class="member" draggable="true" data-name="William Cruz da Rosa" data-original-team="team-02">
+        William Cruz da Rosa
+        <button class="mark-absent">Falta</button>
+        <button class="mark-present">Presença</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Equipe 04 -->
+  <div class="team" id="team-04">
+    <h3>Equipe 04</h3>
+    <div class="droppable">
+      <div class="member" draggable="true" data-name="Marcos Aurélio Bueno Junior" data-original-team="team-04">
+        Marcos Aurélio Bueno Junior
+        <button class="mark-absent">Falta</button>
+        <button class="mark-present">Presença</button>
+      </div>
+      <div class="member" draggable="true" data-name="Marcos Wesley Alves Rodrigues" data-original-team="team-04">
+        Marcos Wesley Alves Rodrigues
+        <button class="mark-absent">Falta</button>
+        <button class="mark-present">Presença</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Equipe 08 -->
+  <div class="team" id="team-08">
+    <h3>Equipe 08</h3>
+    <div class="droppable">
+      <div class="member" draggable="true" data-name="João Vitor Lopes da Silva" data-original-team="team-08">
+        João Vitor Lopes da Silva
+        <button class="mark-absent">Falta</button>
+        <button class="mark-present">Presença</button>
+      </div>
+      <div class="member" draggable="true" data-name="" data-original-team="team-08">
+        Membro não identificado
+        <button class="mark-absent">Falta</button>
+        <button class="mark-present">Presença</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Equipe 11 -->
+  <div class="team" id="team-11">
+    <h3>Equipe 11</h3>
+    <div class="droppable">
+      <div class="member" draggable="true" data-name="Helson de Oliveira Fritscher" data-original-team="team-11">
+        Helson de Oliveira Fritscher
+        <button class="mark-absent">Falta</button>
+        <button class="mark-present">Presença</button>
+      </div>
+      <div class="member" draggable="true" data-name="Ismael Carneiro da Rosa" data-original-team="team-11">
+        Ismael Carneiro da Rosa
+        <button class="mark-absent">Falta</button>
+        <button class="mark-present">Presença</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Equipe 14 -->
+  <div class="team" id="team-14">
+    <h3>Equipe 14</h3>
+    <div class="droppable">
+      <div class="member" draggable="true" data-name="Carlos Augusto Garcia de Andrade" data-original-team="team-14">
+        Carlos Augusto Garcia de Andrade
+        <button class="mark-absent">Falta</button>
+        <button class="mark-present">Presença</button>
+      </div>
+      <div class="member" draggable="true" data-name="Igor Gomes Martins" data-original-team="team-14">
+        Igor Gomes Martins
+        <button class="mark-absent">Falta</button>
+        <button class="mark-present">Presença</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Equipe 16 -->
+  <div class="team" id="team-16">
+    <h3>Equipe 16</h3>
+    <div class="droppable">
+      <div class="member" draggable="true" data-name="Victor da Silva Lyra" data-original-team="team-16">
+        Victor da Silva Lyra
+        <button class="mark-absent">Falta</button>
+        <button class="mark-present">Presença</button>
+      </div>
+      <div class="member" draggable="true" data-name="Marcelo Machado Munhoz Junior (Trainee)" data-original-team="team-16">
+        Marcelo Machado Munhoz Junior (Trainee)
+        <button class="mark-absent">Falta</button>
+        <button class="mark-present">Presença</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Equipe 17 -->
+  <div class="team" id="team-17">
+    <h3>Equipe 17</h3>
+    <div class="droppable">
+      <div class="member" draggable="true" data-name="Djonatan Pereira Rodrigues Wedy (Trainee)" data-original-team="team-17">
+        Djonatan Pereira Rodrigues Wedy (Trainee)
+        <button class="mark-absent">Falta</button>
+        <button class="mark-present">Presença</button>
+      </div>
+      <div class="member" draggable="true" data-name="Diego Malaquias Nascimento" data-original-team="team-17">
+        Diego Malaquias Nascimento
+        <button class="mark-absent">Falta</button>
+        <button class="mark-present">Presença</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TNF -->
+  <div class="team" id="tnf">
+    <h3>TNF</h3>
+    <div class="droppable">
+      <div class="member" draggable="true" data-name="Davi Lamb" data-original-team="tnf">
+        Davi Lamb
+        <button class="mark-absent">Falta</button>
+        <button class="mark-present">Presença</button>
+      </div>
+      <div class="member" draggable="true" data-name="Renato Raniele Barreto Freitas" data-original-team="tnf">
+        Renato Raniele Barreto Freitas
+        <button class="mark-absent">Falta</button>
+        <button class="mark-present">Presença</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Painel de Faltas -->
+  <div class="panel" id="absent-panel">
+    <h3>Faltas</h3>
+        <div class="droppable" id="absent-droppable"></div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.mark-absent').forEach(button => {
+    button.addEventListener('click', e => {
+      const member = e.target.parentElement;
+      const absentPanel = document.getElementById('absent-droppable');
+      if (!absentPanel.contains(member)) {
+        absentPanel.appendChild(member);
+        member.classList.add('absent');
+      }
+    });
+  });
+
+  document.querySelectorAll('.mark-present').forEach(button => {
+    button.addEventListener('click', e => {
+      const member = e.target.parentElement;
+      const originalTeamId = member.dataset.originalTeam;
+      const originalTeam = document.getElementById(originalTeamId).querySelector('.droppable');
+      if (originalTeam && !originalTeam.contains(member)) {
+        originalTeam.appendChild(member);
+        member.classList.remove('absent');
+      }
+    });
+  });
+
+  // Functionality for exporting a PDF
+  document.querySelector('.download-data').addEventListener('click', () => {
+    html2canvas(document.body).then(canvas => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, 'PNG', 0, 0, 210, 297); // A4 dimensions
+      pdf.save('equipes_faltas.pdf');
+    });
+  });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+</body>
+</html>
+
